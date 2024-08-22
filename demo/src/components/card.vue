@@ -46,6 +46,14 @@ export default {
     showChapt1() {
       this.$emit('showChapt1');
     }
+  },mounted() {
+    const cards = document.getElementsByClassName('country-card');
+    for (let i = 0; i < cards.length; i++) {
+      // 使用 setTimeout 来延迟透明度的改变
+      setTimeout(() => {
+        cards[i].style.opacity = 1;
+      }, i * 60);
+    }
   }
 }
 </script>
@@ -60,6 +68,8 @@ export default {
     width: 30%;
     margin: 10px;
     padding: 10px;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
 }
 .card-img-top {
     width: 200px;
