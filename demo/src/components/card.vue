@@ -46,6 +46,16 @@ export default {
     showChapt1() {
       this.$emit('showChapt1');
     }
+  },
+  //cards被創建以後,初始透明度為0,以下代碼將執行每張卡片透明度依序設定為1
+  mounted() {
+    const cards = document.getElementsByClassName('country-card');
+    for (let i = 0; i < cards.length; i++) {
+      // 使用 setTimeout 来延迟透明度的改变
+      setTimeout(() => {
+        cards[i].style.opacity = 1;
+      }, i * 75);
+    }
   }
 }
 </script>
@@ -60,6 +70,8 @@ export default {
     width: 30%;
     margin: 10px;
     padding: 10px;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
 }
 .card-img-top {
     width: 200px;
