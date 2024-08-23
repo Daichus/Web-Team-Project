@@ -111,7 +111,7 @@ export default {
   opacity: 0;
   transition: opacity 0.4s ease-in-out;
   overflow: scroll;
-} 
+}
 .dialogue{
   background: #ffffff;
   border-radius: 15px;
