@@ -26,12 +26,11 @@ export default {
     },
 
     startRecognition(index) {
+      this.expandSection(index, true);
       const targetSentence = this.chapt1Data[index].english;
       this.showRecordingMessage(index);
       const checkSpeech = createSpeechRecognition(targetSentence, (isCorrect) => {
-        if (recordingMessage) {
-          recordingMessage.style.opacity = '0'; // 隐藏消息
-        }
+        this.expandSection(index, false);
         if (isCorrect) {
           this.correctIndex = index;
           this.showSuccessIcon(index); // 直接显示成功图标
@@ -43,13 +42,15 @@ export default {
         }
       });
       checkSpeech(); // 启动语音识别
+
     },
     showSuccessIcon(index) {
       const resultIcon = document.querySelectorAll('.result_icon')[index];
       if (resultIcon) {
         resultIcon.style.transform = 'scale(1)';
       }
-    },showFailIcon(index){
+    },
+    showFailIcon(index){
       const resultIcon = document.querySelectorAll('.result_icon')[index];
       if (resultIcon) {
         resultIcon.src= "/public/img2/failIcon.png";
@@ -63,7 +64,14 @@ export default {
         recordingMessage.style.opacity = '0';
       },6500)
     },
-    expandSection (index) {
+    expandSection (index, expand) {
+      const dialogueSection = document.querySelectorAll('.dialogue')[index];
+      if (dialogueSection) {
+        dialogueSection.style.height = expand ? '400px' : '200px'; // 根据需要调整值
+      }
+      setTimeout(() => {
+        dialogueSection.style.height = '200px';
+      },7000)
 
     }
   },
@@ -93,7 +101,7 @@ export default {
         <small class="cn mt-2">中譯:{{dialogue.chinese}}</small>
         <button class="btn btn-primary" @click="startRecognition(index)">開始!</button>
       </div>
-      <div class="d-flex justify-content-center recording">錄音中....</div>
+      <div class="d-flex justify-content-center recording mt-5">錄音中....</div>
     </div>
   </div>
   <div class="d-flex justify-content-center m-4">
@@ -128,11 +136,11 @@ export default {
 .dialogue {
    background: #ffffff;
    border-radius: 15px;
-   transition: all 0.3s ease-in-out; /* 增加动画效果 */
+   transition: height 0.5s ease-in-out; /* 增加动画效果 */
+   height: 200px;
+   overflow: hidden;
  }
 
-.dialogue.expanded {
-  height: 400px; /* 设置展开后的高度 */
-}
+
 
 </style>
