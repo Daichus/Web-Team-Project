@@ -51,7 +51,7 @@ export default {
       console.log(this.setList);
 
   try{
-      const data = await loadChapter1("/src/textRaw/subtitles_test2.json");
+      const data = await loadChapter1("/src/textRaw/subtitles_test2test.json");
       this.chapt1Data = data;
   }catch(error) {
     console.error('Error loading data:', error);
