@@ -59,6 +59,8 @@ export default {
       this.totalScore += 1;
 
       if(this.totalScore === 10) {
+        const finalScore = document.querySelector('.currentScore');
+        finalScore.classList.add('text-success');
         this.sendCompleteChaptorMessage();
       }
     },
@@ -111,9 +113,9 @@ export default {
 }
 </script>
 <template>
-  <div class="chaptTitle d-flex justify-content-center text-white">{{chaptTitle}}</div>
+  <div class="chaptTitle  d-flex justify-content-center text-white">{{chaptTitle}}</div>
   <div class="d-flex justify-content-evenly">
-    <h2 class="currentScore  fst-italic">{{totalScore}}/10</h2>
+    <h2 class="currentScore mt-2 h4 text-primary fst-italic">目前進度：{{totalScore}}/10</h2>
   </div>
   <div class="container dialogue-container" id="dialContainer">
 

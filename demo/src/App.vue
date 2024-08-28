@@ -5,7 +5,7 @@
   <div class="container mt-3">
       <div v-if="mainIsVisible" class="row justify-content-center" id="medalTable">
           <div v-for="set in setList" :key="set.name" class="country-card col-lg-2 col-md-3 col-sm-4 col-6">
-              <card :setName="set.name" :setImg="set.img" @showChapt1 = "showChapt1" />
+              <card :setName="set.name" :setImg="set.img" @showChapt1 = "showChapt1" @sendCompleteChaptorMessage="" />
           </div> 
       </div>
       <!-- 頁碼 -->
