@@ -9,7 +9,7 @@
           </div> 
       </div>
       <!-- 頁碼 -->
-    <chapt1 v-if="chapt1isVisible" :chapt1Data="chapt1Data"  @closePgn = "closePage" />
+    <chapt1 v-if="chapt1isVisible" :chapt1Data="chapt1Data" :chaptTitle="chaptTitle[0]"  @closePgn = "closePage" />
   </div>
 
   <!-- footer -->
@@ -27,6 +27,8 @@ export default {
   data() {
       return {
           set: null,
+       chaptTitle: ['Chapter 1', 'Chapter 2','Chapter 3','Chapter 4',"Chapter 5",'Chapter 6'],
+
           img2_url: {
               第一集: "friends1.jpg",
               第二集: "friends2.jpg",

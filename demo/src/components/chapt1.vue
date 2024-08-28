@@ -6,11 +6,17 @@ export default {
   ///所有中英句子存在一個名為chapt1Data的陣列中
   data() {
     return {
+      answeredStatus:[],
+      totalScore:0,
       activeIndex: null,  // 用于跟踪当前互动的对话区块
       correctIndex: null  // 用于跟踪当前互动的对话区块
     };
   },
   props:{
+    chaptTitle:{
+      type:String,
+      required: true
+    },
     chapt1Data:{
       type:Array,
       required:true
@@ -43,12 +49,17 @@ export default {
         }
       });
       checkSpeech(); // 启动语音识别
-
     },
     showSuccessIcon(index) {
       const resultIcon = document.querySelectorAll('.result_icon')[index];
       if (resultIcon) {
         resultIcon.style.transform = 'scale(1)';
+      }
+      this.answeredStatus[index] = 1;
+      this.totalScore += 1;
+
+      if(this.totalScore === 10) {
+        this.sendCompleteChaptorMessage();
       }
     },
     showFailIcon(index){
@@ -82,8 +93,11 @@ export default {
       setTimeout(() => {
         dialogueSection.style.height = '200px';
       },7000)
-
+    },
+    sendCompleteChaptorMessage() {
+      this.$emit('sendCompleteChaptorMessage');
     }
+
   },
 
 
@@ -97,7 +111,12 @@ export default {
 }
 </script>
 <template>
+  <div class="chaptTitle d-flex justify-content-center text-white">{{chaptTitle}}</div>
+  <div class="d-flex justify-content-evenly">
+    <h2 class="currentScore  fst-italic">{{totalScore}}/10</h2>
+  </div>
   <div class="container dialogue-container" id="dialContainer">
+
     <div class="dialogue shadow-sm m-5 p-4" v-for="(dialogue, index) in chapt1Data" :key="index">
       <div class="d-flex">
         <p class="h2">請念出</p>
@@ -107,7 +126,7 @@ export default {
       </div>
       <div class="h3 eng mb-4">{{dialogue.english}}</div>
       <div class="d-flex justify-content-between">
-        <small class="cn mt-2 ">中譯:{{dialogue.chinese}}</small>
+        <small class="cn mt-2 fst-italic">中譯:{{dialogue.chinese}}</small>
         <button class="btn btn-primary startBtn" @click="startRecognition(index)">開始!</button>
       </div>
       <div class="d-flex justify-content-center recording mt-5">錄音中....</div>
@@ -119,6 +138,11 @@ export default {
 </template>
 
 <style scoped>
+
+.chaptTitle{
+  font-size: 50px;
+  background: linear-gradient(90deg, transparent, black, transparent);
+}
 .container{
   height: 800px;
   background: #f9f9f9 ;
@@ -149,9 +173,6 @@ export default {
    height: 200px;
    overflow: hidden;
  }
-.cn{
-  font-style: italic;
-}
 .dialogue:hover{
   transform: scale(1.05);
 }
