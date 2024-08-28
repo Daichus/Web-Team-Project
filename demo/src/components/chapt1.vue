@@ -1,6 +1,7 @@
 <script>
 import { createSpeechRecognition } from "/src/scripts/audioRecognition.js";
 
+
 export default {
   ///所有中英句子存在一個名為chapt1Data的陣列中
   data() {
@@ -59,15 +60,24 @@ export default {
     },
     showRecordingMessage(index) {
       const recordingMessage = document.querySelectorAll('.recording')[index];
+      const currentStartBtn = document.querySelectorAll('.startBtn')[index];
       recordingMessage.style.opacity = '1';
+      currentStartBtn.disabled = true;
+      currentStartBtn.classList.add('btn-secondary');
+      currentStartBtn.classList.remove('btn-primary');
+      currentStartBtn.innerText = '請稍候';
       setTimeout((index) => {
         recordingMessage.style.opacity = '0';
+        currentStartBtn.disabled = false;
+        currentStartBtn.classList.add('btn-primary');
+        currentStartBtn.classList.remove('btn-secondary');
+        currentStartBtn.innerText = '開始!';
       },6500)
     },
     expandSection (index, expand) {
       const dialogueSection = document.querySelectorAll('.dialogue')[index];
       if (dialogueSection) {
-        dialogueSection.style.height = expand ? '400px' : '200px'; // 根据需要调整值
+        dialogueSection.style.height = expand ? '300px' : '200px'; // 根据需要调整值
       }
       setTimeout(() => {
         dialogueSection.style.height = '200px';
@@ -87,7 +97,6 @@ export default {
 }
 </script>
 <template>
-  <div>Let's start!</div>
   <div class="container dialogue-container" id="dialContainer">
     <div class="dialogue shadow-sm m-5 p-4" v-for="(dialogue, index) in chapt1Data" :key="index">
       <div class="d-flex">
@@ -98,8 +107,8 @@ export default {
       </div>
       <div class="h3 eng mb-4">{{dialogue.english}}</div>
       <div class="d-flex justify-content-between">
-        <small class="cn mt-2">中譯:{{dialogue.chinese}}</small>
-        <button class="btn btn-primary" @click="startRecognition(index)">開始!</button>
+        <small class="cn mt-2 ">中譯:{{dialogue.chinese}}</small>
+        <button class="btn btn-primary startBtn" @click="startRecognition(index)">開始!</button>
       </div>
       <div class="d-flex justify-content-center recording mt-5">錄音中....</div>
     </div>
@@ -136,11 +145,16 @@ export default {
 .dialogue {
    background: #ffffff;
    border-radius: 15px;
-   transition: height 0.5s ease-in-out; /* 增加动画效果 */
+   transition: height 0.5s ease-in-out,transform 0.2s ease-in-out;
    height: 200px;
    overflow: hidden;
  }
-
+.cn{
+  font-style: italic;
+}
+.dialogue:hover{
+  transform: scale(1.05);
+}
 
 
 </style>

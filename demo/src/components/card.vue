@@ -54,7 +54,7 @@ export default {
       // 使用 setTimeout 来延迟透明度的改变
       setTimeout(() => {
         cards[i].style.opacity = 1;
-      }, i * 75);
+      }, i * 120);
     }
   }
 }
